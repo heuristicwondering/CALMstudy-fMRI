@@ -3,21 +3,8 @@
 # Written by Megan Finnegan and Chris Perriello 2/14/2019
 # Contact Megan at heuristicwondering@gmail.com
 #
-# Adapted from MATLAB code by Dennis Thompson and Lauren Zakskorn
-# Written for Psychopy 1.90.3 with Python 3.6.3
+# Written for Psychopy 3.0.3 with Python 3.6.3
 #   - This may run in other versions, but will likely not behave nicely.
-#
-# This WILL BREAK if you try to include the same video twice across any 
-# stimuli list used during a single execution of this experiment. This means 
-# that you can never show the subject the same vid twice in any given run. 
-# If you wish to avoid this unfortunate behavior, create copies of your movie 
-# for each time it should be played. NTS: Fix this in future versions.
-#
-# Also note that the videos are preloaded to minimize latency (this is why 
-# there are problems with replay). This may be an issue in systems with low 
-# RAM. This was done in the event that the videos were being played from an 
-# off-site server, but is no longer a concern. NTS: Fix this by loading movie
-# to display on the fly during the preceding component.
 #
 # Windows 10 does not alway track the active window properly. To be sure that 
 # the proper window is in focus for this experiment, don't bring other programs 
