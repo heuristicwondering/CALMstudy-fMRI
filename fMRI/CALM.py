@@ -1,12 +1,12 @@
 # CALM study for fMRI
 # Version 0.01 -- Alpha.
-# Written by Megan Finnegan and Chris Perriello 2/14/2019
+# Written by Megan Finnegan and Chris Perriello 2/14/2019ish
 # Contact Megan at heuristicwondering@gmail.com
 #
 # Written for Psychopy 3.0.3 with Python 3.6.3
 #   - This may run in other versions, but will likely not behave nicely.
 #
-# Windows 10 does not alway track the active window properly. To be sure that 
+# Windows 10 does not alway track the active window properly. To be sure that
 # the proper window is in focus for this experiment, don't bring other programs 
 # or the desktop into focus during code execution.
 
