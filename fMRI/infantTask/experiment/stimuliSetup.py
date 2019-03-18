@@ -4,7 +4,7 @@ psychopy.useVersion('latest')
 from psychopy import visual, tools
 from psychopy.constants import (NOT_STARTED)
 
-def defineStim(window2use, stimConditions, extraStimCond=[], path2movies=''):
+def defineStim(window2use, stimTimings, path2movies=''):
 
     Instr1 = visual.TextStim(win=window2use, name='Instr1', #Resting State instructions
         text='For this part of the scan we ask that you keep your eyes open (blinking is fine). \n',
@@ -87,6 +87,14 @@ def defineStim(window2use, stimConditions, extraStimCond=[], path2movies=''):
         'thanks1':thanks1, 'thanks2':thanks2, 'asterisks':asterisks, \
         'fixation':fixation, 'movies':movies}
     return stimuli
+
+
+def getMovieNames(stimTimings):
+    # stimTimings will be a list of dictionaries
+    # fields will be 'stimName' and 'time'
+    # return a list of all unique stimuli names
+    pass
+
 
 class MovieStimuli:
     def __init__(self, window2use, stimConditions, path2movies, name=''):
