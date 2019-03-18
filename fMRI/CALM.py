@@ -10,23 +10,8 @@
 # the proper window is in focus for this experiment, don't bring other programs 
 # or the desktop into focus during code execution.
 
-
-from __future__ import absolute_import, division
-
-import psychopy
-psychopy.useVersion('latest')
-
 from psychopy import locale_setup, visual, monitors, core, data, event, logging, sound, gui, info
-from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
-                                STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
-
-import numpy as np  # whole numpy lib is available, prepend 'np.'
-from numpy import (sin, cos, tan, log, log10, pi, average,
-                   sqrt, std, deg2rad, rad2deg, linspace, asarray)
-from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
-import sys  # to get file system encoding
-import math
 
 # Functions and classes for building stimuli custom to this experiment
 from experiment import stimuliSetup, executeInstructions, executeTrials
@@ -37,35 +22,52 @@ os.chdir(_thisDir)
 
 #-------------------------------------------------------------------------------------#
 # -----Setting up Experiment Parameters-------
-RUNLENGTH = 1000 # Time in seconds of planned run.
-
 # Store info about the experiment session
-expName = u'socevalPilot'
+expName = 'CALMstudy'
 dlg = gui.Dlg(title=expName)
 dlg.addField('participant','Jayne Doe')
-dlg.addField('Scan Type', choices=['Practice', 'Scan'])
-dlg.addText('Only relevant for scan type \'Scan\'')
-dlg.addField('session','##')
-dlg.addField('Instuction Length', choices=['long', 'short'])
-dlg.addText('Planned Scan Time: ' + str(RUNLENGTH) + ' seconds')
+dlg.addField('Scan Type', choices=['Task', 'Rest'])
+dlg.addField('Session', choices=['Pre-Intervention', 'Post-Intervention'])
 expValues = dlg.show()
 
 if dlg.OK == False:
     core.quit()  # user pressed cancel
+
+# Settings for launchScan:
+if expValues['Scan Type'] == 'Task':
+    MR_settings = {
+        'runlength' : 900 # duration (sec) of this scan
+        'TR': 2.000,  # duration (sec) per whole-brain volume
+        'volumes': 900  # number of whole-brain 3D volumes per scanning run
+        'sync': 'equal',  # character to use as the sync timing event; assumed to come at start of a volume
+        'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
+        'sound': True  # in test mode: play a tone as a reminder of scanner noise
+    }
+elif expValues['Scan Type'] == 'Rest':
+    MR_settings = {
+        'runlength': 601  # duration (sec) of this scan
+        'TR': 1.200,  # duration (sec) per whole-brain volume
+        'volumes': 800  # number of whole-brain 3D volumes per scanning run
+        'sync': 'equal',  # character to use as the sync timing event; assumed to come at start of a volume
+        'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
+        'sound': True  # in test mode: play a tone as a reminder of scanner noise
+    }
+
+# Allow experimenter to change scan settings at launch.
+dlg = gui.Dlg(title=expName)
+dlg.addText('These are the current scan parameters.\n'
+            'This is for informational purposes only.\n'
+            'If these settings are correct, just click \'OK\'\n')
+dlg.addText('Run length (in seconds) = ' + str(MR_settings['runlength']))
+dlg.addText('TR = ' + str(MR_settings['TR']))
+
 
 expKeys = ['participant', 'scantype', 'session',  'instrlen']
 expInfo = dict( zip( expKeys, expValues ) )
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 
-# settings for launchScan:
-MR_settings = {
-    'TR': 1.000,     # duration (sec) per whole-brain volume
-    'volumes': RUNLENGTH,  # number of whole-brain 3D volumes per scanning run
-    'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume
-    'skip': 0,       # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
-    'sound': True    # in test mode: play a tone as a reminder of scanner noise
-    }
+
 
 # Loading the list of stimuli to present and updating expInfo
 if expInfo['scantype'] == 'Practice':
