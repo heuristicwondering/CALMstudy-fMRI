@@ -1,6 +1,6 @@
 # CALM study for fMRI
 # Version 0.01 -- Alpha.
-# Written by Megan Finnegan and Chris Perriello 2/14/2019
+# Written by Megan Finnegan and Chris Perriello 2/14/2019ish
 # Contact Megan at heuristicwondering@gmail.com
 #
 # Written for Psychopy 3.0.3 with Python 3.6.3
