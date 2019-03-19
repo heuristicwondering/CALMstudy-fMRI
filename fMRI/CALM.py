@@ -49,6 +49,8 @@ if expValues['scantype'] == 'Task':
         'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
         'sound': True  # in test mode: play a tone as a reminder of scanner noise
     }
+
+    expInfo.update({'movieDuration':15}) # all videos will display for this many seconds
 elif expValues['scantype'] == 'Rest':
     MR_settings = {
         'runlength': 601  # duration (sec) of this scan
@@ -68,44 +70,39 @@ dlg.addText('Run length (in seconds) = ' + str(MR_settings['runlength']))
 dlg.addText('TR = ' + str(MR_settings['TR']))
 dlg.addText('Volumes = ' + str(MR_settings['volumes']))
 scanInfo = dlg.show()
+
 if scanInfo.OK == False:
     core.quit()  # user pressed cancel
 
-# Loading the list of stimuli to present and updating expInfo
-if expInfo['scantype'] == 'Practice':
-    
-    stimFileGuided = _thisDir + os.sep + u'stimuliLists' + os.sep + u'guided_vids.csv'
-    stimConditionsGuided = data.importConditions(stimFileGuided)
-    
-    stimFile = _thisDir + os.sep + u'stimuliLists' + os.sep + u'se_run00.csv'
-    expInfo['session'] = 'practice'
-    
-elif expInfo['scantype'] == 'Scan':
-    
-    thisrun = expInfo['session']
-    stimConditionsGuided = []
-    
-    # Truncate string to last two digits
-    # NTS: Notify user and let them change their mind in future versions
-    thisrun = thisrun[-2:] if len(thisrun) > 2 else thisrun
-    stimFile = _thisDir + os.sep + u'stimuliLists' + os.sep + u'se_run' + thisrun + u'.csv'
-    
-    expInfo['session'] = thisrun
-
-stimConditions = data.importConditions(stimFile)
-
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s_%s' % (expInfo['participant'], expInfo['session'], expName, expInfo['date'])
-vidpath = _thisDir + os.sep + u'videos' + os.sep # Assuming all movies are here
+dataFile = _thisDir + os.sep + 'data/%s_%s_%s_%s_%s' % (expInfo['participant'], expInfo['scantype'], expInfo['session'], expName, expInfo['date'])
 
-# An ExperimentHandler isn't essential but helps with data saving
-# Since this will only ever handle 1 run and stimuli will
-# be presented sequentially, not bothering with a TrialHandler.
-thisExp = data.ExperimentHandler(name=expName, version='',
-    extraInfo=expInfo, runtimeInfo=None,
-    originPath=None,
-    savePickle=True, saveWideText=True,
-    dataFileName=(filename))
+# Asking user what list of videos to play and setting up experiment handler
+if expInfo['scantype'] == 'Task':
+    dlg = gui.fileOpenDlg(tryFilePath='./infantTask/stimuliLists/', prompt='Select which video list to use', allowed='*.csv')
+    stimFile = dlg.show
+
+    if stimFile is None:
+        core.quit() # user pressed cancel
+
+    # Loading the list of stimuli to present
+    stimConditions = data.importConditions(stimFile)
+
+    vidpath = _thisDir + os.sep + u'videos' + os.sep  # Assuming all movies are here
+    assert os.path.isdir(vidpath), vidpath + ' which should contain stimuli does not exist'
+
+    # An ExperimentHandler isn't essential but helps with data saving
+    thisExp = data.ExperimentHandler(name=expName, version='',
+                                     extraInfo=expInfo, runtimeInfo=None,
+                                     originPath=None,
+                                     savePickle=True, saveWideText=True,
+                                     dataFileName=dataFile)
+elif expInfo['scanType'] == 'Rest':
+    thisExp = data.ExperimentHandler(name=expName, version='',
+                                     extraInfo=expInfo, runtimeInfo=None,
+                                     originPath=None,
+                                     savePickle=True, saveWideText=True,
+                                     dataFileName=dataFile)
 
 logFile = logging.LogFile(filename+'.log', level=logging.EXP) # save a log file for detail verbose info
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -117,14 +114,14 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window <-- subjectMonitor NEEDS TO BE ADJUSTED FOR MONITOR USING! 
 expMonitor = monitors.Monitor('subjectMonitor')
-SCREEN_SIZE = (1920,1080)   # screen res
+SCREEN_SIZE = (1536,801)   # screen res
 
 # Using secondary monitor NEEDS TO BE ADJUSTED FOR MONITOR USING! 
 win = visual.Window(
     SCREEN_SIZE, fullscr=True, screen=1,
     allowGUI=False, allowStencil=False,
     monitor=expMonitor, 
-    color=[-0.569,-0.514,-0.373], colorSpace='rgb',
+    color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 
 # store frame rate of monitor if we can measure it
@@ -136,8 +133,10 @@ else:
 
 #-------------------------------------------------------------------------------------#
 # Initializing Stimuli and Clocks
-stimuli = stimuliSetup.defineStim(win, stimConditions, 
-    extraStimCond = stimConditionsGuided, path2movies = vidpath)
+if expInfo['scanType'] == 'Task':
+    stimuli = stimuliSetup.defineTaskStim(win, stimConditions, path2movies = vidpath)
+elif expInfo['scanType'] == 'Rest':
+    stimuli = stimuliSetup.defineRestStim(win)
 
 globalClock = core.Clock() # Keep track of beginning of time
 MRClock = core.Clock() # Keep track of the start of a scan session
@@ -145,27 +144,27 @@ instructionsClock = core.Clock() # Keep track of start of instruction components
 experimentClock = core.Clock() # Keep track of start of experiment components
 
 #-------------------------------------------------------------------------------------#
-# -----Bounds Checking - Verify that planned stimuli do not exceed expected run time---
-if expInfo['scantype'] == 'Scan': 
-    # This is the presumed trial order
+# -----Bounds Checking - Verify that planned stimuli match expected run time---
+if expInfo['scantype'] == 'Task':
     TR = MR_settings['TR']
+    RUNLENGTH = MR_settings['runlength']
+    VIDLENGTH = expInfo['movieDuration']
+
     estScanDuration = 0
+    warnTruncation = False
+
     for trial in stimConditions:
-        astr = trial['ITI'] - trial['ITI'] % TR
-        cue = 2 - 2 % TR
-        fix1 = trial['ISI'] - trial['ISI'] % TR
         movdur = stimuli['movies'].MovieStimDict[trial['VideoFile']].duration
-        mov = movdur - movdur % TR
-        fix2 = 3 - 3 % TR
-        rating = 3 - 3 % TR
-        
-        estScanDuration += astr + cue + fix1 + mov + fix2 + rating
+
+        if movdur != VIDLENGTH:
+
+        estScanDuration += mov
     
     if estScanDuration != RUNLENGTH:
         dlg = gui.Dlg(title='DURATION WARNING')
         dlg.addText('Warning!\n\nThe estimated scan length is ' + 
             str(estScanDuration) + ' seconds but the predefined ' + 
-            'scan length has been set to ' + str(RUNLENGTH) + 
+            'scan length has been set to ' + str(RUNLENGTH) +
             ' seconds.\n\nAre you sure you want to continue?\n\n' + 
             'Experiment will run until there are no more trials ' +
             'to show or the predefined scan time is reached, \n' + 

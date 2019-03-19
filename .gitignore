@@ -8,6 +8,7 @@
 ehthumbs.db
 Thumbs.db*
 fMRI/.idea/
+/fMRI/infantTask/videos/
 
 # files larger than 100MB #
 ###########################
