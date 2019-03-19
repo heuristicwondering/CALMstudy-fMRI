@@ -30,7 +30,7 @@ dlg.addField('Scan Type', choices=['Task', 'Rest'])
 dlg.addField('Session', choices=['Pre-Intervention', 'Post-Intervention'])
 expValues = dlg.show()
 
-if dlg.OK == False:
+if not dlg.OK:
     core.quit()  # user pressed cancel
 
 # Creating a dictionary of information about experiment
@@ -69,13 +69,15 @@ dlg.addText('These are the current scan parameters.\n'
 dlg.addText('Run length (in seconds) = ' + str(MR_settings['runlength']))
 dlg.addText('TR = ' + str(MR_settings['TR']))
 dlg.addText('Volumes = ' + str(MR_settings['volumes']))
+if expInfo['scanType'] == 'Task':
+    dlg.addText('Planned stimuli duration = ' + str(expInfo['movieDuration']) + ' seconds')
 scanInfo = dlg.show()
 
-if scanInfo.OK == False:
+if not scanInfo.OK:
     core.quit()  # user pressed cancel
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-dataFile = _thisDir + os.sep + 'data/%s_%s_%s_%s_%s' % (expInfo['participant'], expInfo['scantype'], expInfo['session'], expName, expInfo['date'])
+filename = _thisDir + os.sep + 'data/%s_%s_%s_%s_%s' % (expInfo['participant'], expInfo['scantype'], expInfo['session'], expName, expInfo['date'])
 
 # Asking user what list of videos to play and setting up experiment handler
 if expInfo['scantype'] == 'Task':
@@ -96,13 +98,13 @@ if expInfo['scantype'] == 'Task':
                                      extraInfo=expInfo, runtimeInfo=None,
                                      originPath=None,
                                      savePickle=True, saveWideText=True,
-                                     dataFileName=dataFile)
+                                     dataFileName=filename)
 elif expInfo['scanType'] == 'Rest':
     thisExp = data.ExperimentHandler(name=expName, version='',
                                      extraInfo=expInfo, runtimeInfo=None,
                                      originPath=None,
                                      savePickle=True, saveWideText=True,
-                                     dataFileName=dataFile)
+                                     dataFileName=filename)
 
 logFile = logging.LogFile(filename+'.log', level=logging.EXP) # save a log file for detail verbose info
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -134,7 +136,7 @@ else:
 #-------------------------------------------------------------------------------------#
 # Initializing Stimuli and Clocks
 if expInfo['scanType'] == 'Task':
-    stimuli = stimuliSetup.defineTaskStim(win, stimConditions, path2movies = vidpath)
+    stimuli = stimuliSetup.defineTaskStim(win, stimConditions, vidpath)
 elif expInfo['scanType'] == 'Rest':
     stimuli = stimuliSetup.defineRestStim(win)
 
@@ -156,13 +158,14 @@ if expInfo['scantype'] == 'Task':
     for trial in stimConditions:
         movdur = stimuli['movies'].MovieStimDict[trial['VideoFile']].duration
 
-        if movdur != VIDLENGTH:
+        if movdur != VIDLENGTH or (movdur % TR) != 0:
+            warnTruncation = True
 
-        estScanDuration += mov
+        estScanDuration += VIDLENGTH
     
     if estScanDuration != RUNLENGTH:
         dlg = gui.Dlg(title='DURATION WARNING')
-        dlg.addText('Warning!\n\nThe estimated scan length is ' + 
+        dlg.addText('Warning!\n\nThe estimated scan length is ' +
             str(estScanDuration) + ' seconds but the predefined ' + 
             'scan length has been set to ' + str(RUNLENGTH) +
             ' seconds.\n\nAre you sure you want to continue?\n\n' + 
@@ -173,12 +176,26 @@ if expInfo['scantype'] == 'Task':
             'Press OK to continue.')
         dlg.show()
         
-        if dlg.OK == False:
+        if not dlg.OK:
             core.quit()  # user pressed cancel
         
         logging.warning('Estimated time for stimuli is ' + str(estScanDuration) + 
             ', but predefined time was set to ' + str(RUNLENGTH))
 
+    if warnTruncation:
+        dlg = gui.Dlg(title='TRUNCATION WARNING')
+        dlg.addText('It was detect that some of your videos may be '
+                    'automatically truncated during scanning.\n\n'
+                    'This experiement is designed to sync stimuli onset '
+                    'to the start of volume acquisition. If the planned '
+                    'run time or actual movie durations are not multiples '
+                    'of the TR then truncation may result.')
+        dlg.show()
+
+        if not dlg.OK:
+            core.quit()  # user pressed cancel
+
+        logging.warning('Stimuli TRUNCATION')
 #-------------------------------------------------------------------------------------#
 # These are encapsulated into functions because while practice 
 # and experiment runs are very similar, they are different 
@@ -187,57 +204,57 @@ if expInfo['scantype'] == 'Task':
 # but future versions should integrate these into single functions.
 #
 #
-if expInfo['scantype'] == 'Practice':
-    #########################################################################################
-    # This is the official start of the experiment. Everything above is just setup.         #
-    # Note that the call to setup functions should be done right before the call to execute #
-    # It is mostly just resetting code that is shared across functions and should be        #
-    # very fast. If you need to do something that takes some time, add it to the stimuli    #
-    # setup and not here.                                                                   #
-    #########################################################################################
-    
-    instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Practice')
-    globalClock.reset() # start the global clock from 0.
-    numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock, 
-       instructionsClock, thisExp)
-    
-    experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Practice')
-    numFlips = executeTrials.runGuidedPracticeExperiment(win, experimentComponents, globalClock,
-       experimentClock, stimConditionsGuided, thisExp, frameN = numFlips)
-    
-    instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Transition')
-    numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock, 
-        instructionsClock, thisExp, frameN = numFlips)
-    
-    experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Scan')
-    numFlips = executeTrials.runExperiment(win, experimentComponents, globalClock,
-       experimentClock, stimConditions, thisExp, MR_settings, MRClock, scantype='Practice', 
-       frameN = numFlips)
-       
-    instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='practiceThankyou')
-    numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock, 
-        instructionsClock, thisExp, frameN = numFlips)
-    
-elif expInfo['scantype'] == 'Scan':
-    # Current behavior is that instructions need to be advanced through with 'space' 
-    # and task will not start listening for trigger pulses (i.e. it won't start) until 
-    # these have all been cycled through. A blank screen will appear when the code begins 
-    # listening for the first trigger.
-    #
-    instructionComponents = executeInstructions.setupInstructions(stimuli, instrType=expInfo['instrlen'])
-    globalClock.reset() # start the global clock from 0.
-    numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock, 
-       instructionsClock, thisExp)
-    
-    experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Scan')
-    numFlips = executeTrials.runExperiment(win, experimentComponents, globalClock,
-       experimentClock, stimConditions, thisExp, MR_settings, MRClock, scantype='Scan', 
-       frameN = numFlips)
-    
-    instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Thankyou')
-    numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock, 
-        instructionsClock, thisExp, frameN = numFlips)
-    
+# if expInfo['scantype'] == 'Practice':
+#     #########################################################################################
+#     # This is the official start of the experiment. Everything above is just setup.         #
+#     # Note that the call to setup functions should be done right before the call to execute #
+#     # It is mostly just resetting code that is shared across functions and should be        #
+#     # very fast. If you need to do something that takes some time, add it to the stimuli    #
+#     # setup and not here.                                                                   #
+#     #########################################################################################
+#
+#     instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Practice')
+#     globalClock.reset() # start the global clock from 0.
+#     numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock,
+#        instructionsClock, thisExp)
+#
+#     experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Practice')
+#     numFlips = executeTrials.runGuidedPracticeExperiment(win, experimentComponents, globalClock,
+#        experimentClock, stimConditionsGuided, thisExp, frameN = numFlips)
+#
+#     instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Transition')
+#     numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock,
+#         instructionsClock, thisExp, frameN = numFlips)
+#
+#     experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Scan')
+#     numFlips = executeTrials.runExperiment(win, experimentComponents, globalClock,
+#        experimentClock, stimConditions, thisExp, MR_settings, MRClock, scantype='Practice',
+#        frameN = numFlips)
+#
+#     instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='practiceThankyou')
+#     numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock,
+#         instructionsClock, thisExp, frameN = numFlips)
+#
+# elif expInfo['scantype'] == 'Scan':
+#     # Current behavior is that instructions need to be advanced through with 'space'
+#     # and task will not start listening for trigger pulses (i.e. it won't start) until
+#     # these have all been cycled through. A blank screen will appear when the code begins
+#     # listening for the first trigger.
+#     #
+#     instructionComponents = executeInstructions.setupInstructions(stimuli, instrType=expInfo['instrlen'])
+#     globalClock.reset() # start the global clock from 0.
+#     numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock,
+#        instructionsClock, thisExp)
+#
+#     experimentComponents = executeTrials.setupExperiment(stimuli, scantype='Scan')
+#     numFlips = executeTrials.runExperiment(win, experimentComponents, globalClock,
+#        experimentClock, stimConditions, thisExp, MR_settings, MRClock, scantype='Scan',
+#        frameN = numFlips)
+#
+#     instructionComponents = executeInstructions.setupInstructions(stimuli, instrType='Thankyou')
+#     numFlips = executeInstructions.displayInstructions(win, instructionComponents, globalClock,
+#         instructionsClock, thisExp, frameN = numFlips)
+
 
 win.close()
 core.quit()
