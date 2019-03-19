@@ -4,66 +4,37 @@ psychopy.useVersion('latest')
 from psychopy import visual, tools
 from psychopy.constants import NOT_STARTED
 
-def defineStim(window2use, stimTimings, path2movies=''):
+def defineTaskStim(window2use, stimTimings, path2movies=''):
 
-    Instr1 = visual.TextStim(win=window2use, name='Instr1', #Resting State instructions
-        text='For this part of the scan we ask that you keep your eyes open (blinking is fine). \n',
-        font='Arial',
-        pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-        color='white', colorSpace='rgb', opacity=1,
-        depth=0.0);
-
-    Instr2 = visual.TextStim(win=window2use, name='Instr2',
-        text='You can relax and let your mind wander, but please stay awake. The screen will be blank during this time.',
-        font='Arial',
-        pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-        color='white', colorSpace='rgb', opacity=1,
-        depth=0.0);
-
-    Instr3 = visual.TextStim(win=window2use, name='Instr3',
-        text=' This part of the scan will last 10 minutes. '
-        font='Arial',
-        pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-        color='white', colorSpace='rgb', opacity=1,
-        depth=0.0);
-
-    Instr4 = visual.TextStim(win=window2use, name='Instr4', #Primary Task instructions
+    TaskInstr1 = visual.TextStim(win=window2use, name='TaskInstr1', #Primary Task instructions
         text='We will now continue on to the next part of the scan.',
         font='Arial',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
         color='white', colorSpace='rgb', opacity=1,
         depth=0.0);
     
-    Instr5 = visual.TextStim(win=window2use, name='Instr5',
+    TaskInstr2 = visual.TextStim(win=window2use, name='TaskInstr2',
         text='You will see 15 second clips of movies appear on the screen.',
         font='Arial',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
         color='white', colorSpace='rgb', opacity=1,
         depth=0.0);
     
-    Instr6 = visual.TextStim(win=window2use, name='Instr6',
+    TaskInstr3 = visual.TextStim(win=window2use, name='TaskInstr3',
         text='Please remain alert and awake while these clips are playing.',
         font='Arial',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
         color='white', colorSpace='rgb', opacity=1,
         depth=0.0);
 
-    Instr7 = visual.TextStim(win=window2use, name='Instr7', #This comes at the end of the RS and the main task instructions
+    TaskQuestions = visual.TextStim(win=window2use, name='TaskQuestions',
         text='Do you have any questions?',
         font='Arial',
         pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
         color='white', colorSpace='rgb', opacity=1,
         depth=0.0);
 
-    thanks1 = visual.TextStim(win=window2use, name='thanks1', #Resting State Last Slide
-        text='Good job!\n' \
-            'You are done with the resting state.',
-        font='Arial',
-        pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-        color='white', colorSpace='rgb', opacity=1,
-        depth=0.0);
-
-    thanks2 = visual.TextStim(win=window2use, name='thanks2',
+    TaskThanks = visual.TextStim(win=window2use, name='TaskThanks',
         text='You are done with the task! \n'
              'You can close your eyes and relax for the rest of the scan, but please try to not fall asleep.',
         font='Arial',
@@ -71,21 +42,61 @@ def defineStim(window2use, stimTimings, path2movies=''):
         color='white', colorSpace='rgb', opacity=1,
         depth=0.0);
 
-    fixation = visual.TextStim(win=window2use, name='fixation',
-        text='+',
-        font='Arial',
-        pos=(0, 0), height=0.4, wrapWidth=None, ori=0, 
-        color='white', colorSpace='rgb', 
-        opacity=1, depth=0.0);
-
     # Returns a class containing a dictionary of movieStim3 objects with filenames used as keys.
     movies = MovieStimuli(window2use, stimConditions, path2movies, name='movies')
     
-    stimuli = {'Instr1':Instr1, 'Instr2':Instr2, 'Instr3':Instr3,
-        'Instr4':Instr4, 'Instr5':Instr5, 'Instr6':Instr6, 'Instr7':Instr7,
-        'thanks1':thanks1, 'thanks2':thanks2, 'fixation':fixation, 'movies':movies}
+    stimuli = {'TaskInstr1':TaskInstr1, 'TaskInstr2':TaskInstr2, 'TaskInstr3':TaskInstr3,
+        'Task Questions':TaskQuestions, 'TaskThanks':TaskThanks, 'movies':movies}
     return stimuli
 
+def defineRestStim(window2use):
+    RestInstr1 = visual.TextStim(win=window2use, name='RestInstr1',  # Resting State instructions
+        text='For this part of the scan we ask that you keep your eyes open (blinking is fine). \n',
+        font='Arial',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb', opacity=1,
+        depth=0.0);
+
+    RestInstr2 = visual.TextStim(win=window2use, name='RestInstr2',
+        text='You can relax and let your mind wander, but please stay awake. The screen will be blank during this time.',
+        font='Arial',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb', opacity=1,
+        depth=0.0);
+
+    RestInstr3 = visual.TextStim(win=window2use, name='RestInstr3',
+        text='This part of the scan will last 10 minutes.',
+        font='Arial',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb', opacity=1,
+        depth=0.0);
+
+    RestQuestions = visual.TextStim(win=window2use, name='RestQuestions',
+        text='Do you have any questions?',
+        font='Arial',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb', opacity=1,
+        depth=0.0);
+
+    RestThanks = visual.TextStim(win=window2use, name='RestThanks',
+        text='Good job!\n' \
+            'You are done with the resting state.',
+        font='Arial',
+        pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb', opacity=1,
+        depth=0.0);
+
+    Fixation = visual.TextStim(win=window2use, name='Fixation',
+        text='+',
+        font='Arial',
+        pos=(0, 0), height=0.4, wrapWidth=None, ori=0,
+        color='white', colorSpace='rgb',
+        opacity=1, depth=0.0);
+
+    # Returns resting state instructions
+    instructions = {'RestInstr1':RestInstr1, 'RestInstr2':RestInstr2, 'RestInstr3':RestInstr3,
+        'RestQuestions':RestQuestions,'RestThanks':RestThanks, 'Fixation':Fixation,}
+    return instructions
 
 def getMovieNames(stimTimings):             # stimTimings will be a list of strings
     temp = set()
