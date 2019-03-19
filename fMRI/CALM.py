@@ -33,8 +33,14 @@ expValues = dlg.show()
 if dlg.OK == False:
     core.quit()  # user pressed cancel
 
+# Creating a dictionary of information about experiment
+expKeys = ['participant', 'scantype', 'session']
+expInfo = dict( zip( expKeys, expValues ) )
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
+
 # Settings for launchScan:
-if expValues['Scan Type'] == 'Task':
+if expValues['scantype'] == 'Task':
     MR_settings = {
         'runlength' : 900 # duration (sec) of this scan
         'TR': 2.000,  # duration (sec) per whole-brain volume
@@ -43,31 +49,27 @@ if expValues['Scan Type'] == 'Task':
         'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
         'sound': True  # in test mode: play a tone as a reminder of scanner noise
     }
-elif expValues['Scan Type'] == 'Rest':
+elif expValues['scantype'] == 'Rest':
     MR_settings = {
         'runlength': 601  # duration (sec) of this scan
         'TR': 1.200,  # duration (sec) per whole-brain volume
         'volumes': 800  # number of whole-brain 3D volumes per scanning run
         'sync': 'equal',  # character to use as the sync timing event; assumed to come at start of a volume
-        'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
+        'skip': 0,  # number of volumes to ignore at start of scan (for T1 stabilization)
         'sound': True  # in test mode: play a tone as a reminder of scanner noise
     }
 
-# Allow experimenter to change scan settings at launch.
+# Tell experimenter what the scan settings are.
 dlg = gui.Dlg(title=expName)
 dlg.addText('These are the current scan parameters.\n'
             'This is for informational purposes only.\n'
             'If these settings are correct, just click \'OK\'\n')
 dlg.addText('Run length (in seconds) = ' + str(MR_settings['runlength']))
 dlg.addText('TR = ' + str(MR_settings['TR']))
-
-
-expKeys = ['participant', 'scantype', 'session',  'instrlen']
-expInfo = dict( zip( expKeys, expValues ) )
-expInfo['date'] = data.getDateStr()  # add a simple timestamp
-expInfo['expName'] = expName
-
-
+dlg.addText('Volumes = ' + str(MR_settings['volumes']))
+scanInfo = dlg.show()
+if scanInfo.OK == False:
+    core.quit()  # user pressed cancel
 
 # Loading the list of stimuli to present and updating expInfo
 if expInfo['scantype'] == 'Practice':
