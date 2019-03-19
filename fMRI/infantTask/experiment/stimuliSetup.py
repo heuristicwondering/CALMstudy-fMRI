@@ -2,7 +2,7 @@ import psychopy
 psychopy.useVersion('latest')
 
 from psychopy import visual, tools
-from psychopy.constants import (NOT_STARTED)
+from psychopy.constants import NOT_STARTED
 
 def defineStim(window2use, stimTimings, path2movies=''):
 
@@ -78,23 +78,23 @@ def defineStim(window2use, stimTimings, path2movies=''):
         color='white', colorSpace='rgb', 
         opacity=1, depth=0.0);
 
-    # Returns a class containing a dictionary of movieStim objects with filenames used as keys.
-    allConditions = stimConditions + extraStimCond
-    movies = MovieStimuli(window2use, allConditions, path2movies, name='movies')
+    # Returns a class containing a dictionary of movieStim3 objects with filenames used as keys.
+    movies = MovieStimuli(window2use, stimConditions, path2movies, name='movies')
     
-    stimuli = {'Instr1':Instr1, 'Instr2':Instr2, 'Instr3':Instr3, \
-        'Instr4':Instr4, 'Instr5':Instr5, 'Instr6':Instr6, 'Instr7':Instr7, \
-        'thanks1':thanks1, 'thanks2':thanks2, 'asterisks':asterisks, \
-        'fixation':fixation, 'movies':movies}
+    stimuli = {'Instr1':Instr1, 'Instr2':Instr2, 'Instr3':Instr3,
+        'Instr4':Instr4, 'Instr5':Instr5, 'Instr6':Instr6, 'Instr7':Instr7,
+        'thanks1':thanks1, 'thanks2':thanks2, 'fixation':fixation, 'movies':movies}
     return stimuli
 
 
-def getMovieNames(stimTimings):
-    # stimTimings will be a list of dictionaries
-    # fields will be 'stimName' and 'time'
-    # return a list of all unique stimuli names
-    pass
-
+def getMovieNames(stimTimings):             # stimTimings will be a list of strings
+    temp = set()
+    uniqueStims = []
+    for item in stimTimings:
+        if item not in temp:
+            temp.add(item)
+            uniqueStims.append(item)
+    return uniqueStims                      #return a list of all unique stimuli names
 
 class MovieStimuli:
     def __init__(self, window2use, stimConditions, path2movies, name=''):
