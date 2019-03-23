@@ -58,7 +58,7 @@ def displayInstructions(win, instructionComponents, globalClock,
                 if firstKey == 'escape': # check for quit (the Esc key) - otherwise, it is a space and advance instr
                     win.close()
                     core.quit()
-                else
+                else:
                     thisComponent.status = STOPPED
                 
                 # If component stopped due to key press, record data
