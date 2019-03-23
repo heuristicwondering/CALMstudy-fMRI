@@ -35,7 +35,7 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 
 # Settings for launchScan:
-if expValues['scantype'] == 'Task':
+if expInfo['scantype'] == 'Task':
     MR_settings = {
         'runlength': 900, # duration (sec) of this scan
         'TR': 2.000,  # duration (sec) per whole-brain volume
@@ -64,11 +64,11 @@ dlg.addText('These are the current scan parameters.\n'
 dlg.addText('Run length (in seconds) = ' + str(MR_settings['runlength']))
 dlg.addText('TR = ' + str(MR_settings['TR']))
 dlg.addText('Volumes = ' + str(MR_settings['volumes']))
-if expInfo['scanType'] == 'Task':
+if expInfo['scantype'] == 'Task':
     dlg.addText('Planned stimuli duration = ' + str(expInfo['movieDuration']) + ' seconds')
-scanInfo = dlg.show()
+dlg.show()
 
-if not scanInfo.OK:
+if not dlg.OK:
     core.quit()  # user pressed cancel
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -77,15 +77,14 @@ filename = _thisDir + os.sep + 'data/%s_%s_%s_%s_%s' % (expInfo['participant'], 
 # Asking user what list of videos to play and setting up experiment handler
 if expInfo['scantype'] == 'Task':
     dlg = gui.fileOpenDlg(tryFilePath='./infantTask/stimuliLists/', prompt='Select which video list to use', allowed='*.csv')
-    stimFile = dlg.show
-
-    if stimFile is None:
+    
+    if dlg is None:
         core.quit() # user pressed cancel
-
+    
+    stimFile = dlg[0]
     # Loading the list of stimuli to present
     stimConditions = data.importConditions(stimFile)
-
-    vidpath = _thisDir + os.sep + u'videos' + os.sep  # Assuming all movies are here
+    vidpath = _thisDir + os.sep + u'infantTask/videos' + os.sep  # Assuming all movies are here
     assert os.path.isdir(vidpath), vidpath + ' which should contain stimuli does not exist'
 
     # An ExperimentHandler isn't essential but helps with data saving
@@ -130,9 +129,10 @@ else:
 
 #-------------------------------------------------------------------------------------#
 # Initializing Stimuli and Clocks
-if expInfo['scanType'] == 'Task':
+print(stimConditions)
+if expInfo['scantype'] == 'Task':
     stimuli = stimuliSetup.defineTaskStim(win, stimConditions, vidpath)
-elif expInfo['scanType'] == 'Rest':
+elif expInfo['scantype'] == 'Rest':
     stimuli = stimuliSetup.defineRestStim(win)
 
 globalClock = core.Clock() # Keep track of beginning of time
