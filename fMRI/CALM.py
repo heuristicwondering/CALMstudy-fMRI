@@ -4,22 +4,17 @@
 # Contact Megan at heuristicwondering@gmail.com
 #
 # Written for Psychopy 3.0.3 with Python 3.6.3
-#   - This may run in other versions, but will likely not behave nicely.
-#
-# Windows 10 does not alway track the active window properly. To be sure that
-# the proper window is in focus for this experiment, don't bring other programs 
-# or the desktop into focus during code execution.
-print('the top')
-from psychopy import locale_setup, visual, monitors, core, data,  logging, gui, info,sound
+
+from psychopy import sound, visual, monitors, core, data, logging, gui
 import os  # handy system and path functions
 
 # Functions and classes for building stimuli custom to this experiment
-#from experiment import stimuliSetup, executeInstructions, executeTrials
+from infantTask.experiment import stimuliSetup, executeInstructions, executeTrials
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
-print('got here')
+
 #-------------------------------------------------------------------------------------#
 # -----Setting up Experiment Parameters-------
 # Store info about the experiment session

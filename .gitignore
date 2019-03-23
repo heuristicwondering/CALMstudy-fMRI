@@ -10,6 +10,9 @@ Thumbs.db*
 fMRI/.idea/
 /fMRI/infantTask/videos/
 fMRI/__pycache__/
+fMRI/infantTask/__pycache__/
+fMRI/infantTask/experiment/__pycache__/
+
 
 # files larger than 100MB #
 ###########################
