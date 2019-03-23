@@ -9,17 +9,17 @@
 # Windows 10 does not alway track the active window properly. To be sure that
 # the proper window is in focus for this experiment, don't bring other programs 
 # or the desktop into focus during code execution.
-
-from psychopy import locale_setup, visual, monitors, core, data, event, logging, sound, gui, info
+print('the top')
+from psychopy import locale_setup, visual, monitors, core, data,  logging, gui, info,sound
 import os  # handy system and path functions
 
 # Functions and classes for building stimuli custom to this experiment
-from experiment import stimuliSetup, executeInstructions, executeTrials
+#from experiment import stimuliSetup, executeInstructions, executeTrials
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
-
+print('got here')
 #-------------------------------------------------------------------------------------#
 # -----Setting up Experiment Parameters-------
 # Store info about the experiment session
@@ -32,7 +32,7 @@ expValues = dlg.show()
 
 if not dlg.OK:
     core.quit()  # user pressed cancel
-
+print('got here too')
 # Creating a dictionary of information about experiment
 expKeys = ['participant', 'scantype', 'session']
 expInfo = dict( zip( expKeys, expValues ) )
@@ -42,9 +42,9 @@ expInfo['expName'] = expName
 # Settings for launchScan:
 if expValues['scantype'] == 'Task':
     MR_settings = {
-        'runlength' : 900 # duration (sec) of this scan
+        'runlength': 900, # duration (sec) of this scan
         'TR': 2.000,  # duration (sec) per whole-brain volume
-        'volumes': 900  # number of whole-brain 3D volumes per scanning run
+        'volumes': 900,  # number of whole-brain 3D volumes per scanning run
         'sync': 'equal',  # character to use as the sync timing event; assumed to come at start of a volume
         'skip': 0,  # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
         'sound': True  # in test mode: play a tone as a reminder of scanner noise
@@ -53,9 +53,9 @@ if expValues['scantype'] == 'Task':
     expInfo.update({'movieDuration':15}) # all videos will display for this many seconds
 elif expValues['scantype'] == 'Rest':
     MR_settings = {
-        'runlength': 601  # duration (sec) of this scan
+        'runlength': 601,  # duration (sec) of this scan
         'TR': 1.200,  # duration (sec) per whole-brain volume
-        'volumes': 800  # number of whole-brain 3D volumes per scanning run
+        'volumes': 800,  # number of whole-brain 3D volumes per scanning run
         'sync': 'equal',  # character to use as the sync timing event; assumed to come at start of a volume
         'skip': 0,  # number of volumes to ignore at start of scan (for T1 stabilization)
         'sound': True  # in test mode: play a tone as a reminder of scanner noise
