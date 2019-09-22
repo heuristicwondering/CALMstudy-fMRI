@@ -15,11 +15,9 @@ Thumbs.db*
 fMRI-experiment/data-infant/
 fMRI-experiment/data-rest/
 fMRI-experiment/data-rest-alternate/
-fMRI-experiment/infant-stimuli/*
 
-# READMEs that explain file heirarchy #
-##############################
-!fMRI-experiment/infant-stimuli/*/README.md
+fMRI-experiment/infant-stimuli/videos/*
+!fMRI-experiment/infant-stimuli/videos/README.md
 
-# files larger than 100MB #
-###########################
+fMRI-experiment/infant-stimuli/stimuli-lists/*
+!fMRI-experiment/infant-stimuli/stimuli-lists/README.md
