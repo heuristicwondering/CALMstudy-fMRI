@@ -1,0 +1,8 @@
+﻿stimName,start,frameStart,keypress,duration,frameStop,end,volumeStart,volumeStop,scantype,session,expName,date,participant,frameRate,
+TaskInstr1,2.101762220263481e-05,0,space,1.9019381869584322,1,1.9019657615572214,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+TaskInstr2,1.9019816047511995,1,space,0.27154059801250696,2,2.1735273809172213,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+TaskInstr3,2.1735392697155476,2,space,0.2560646100901067,3,2.4296095916070044,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+TaskInstr4,2.429620675742626,3,space,0.48011044692248106,4,2.9097364437766373,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+Wait4TriggerScreen,2.9097633715718985,4,,0.5280046896077693,5,3.4377746107056737,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+fixation,3.4377878489904106,5,,4.000035122036934,6,7.437848175875843,1,12,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,
+TaskThanks,7.437882205005735,6,space,1.0236792019568384,7,8.461567195598036,,,Rest-Alternate,Post-Intervention,CALMstudy,2019_Aug_03_2049,Jayne Doe,105.67181890785811,

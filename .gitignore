@@ -7,12 +7,19 @@
 .Trashes
 ehthumbs.db
 Thumbs.db*
-fMRI/.idea/
-/fMRI/infantTask/videos/
-fMRI/__pycache__/
-fMRI/infantTask/__pycache__/
-fMRI/infantTask/experiment/__pycache__/
 
+# Data and development files #
+##############################
+**/.idea/
+**/__pycache__/
+fMRI-experiment/data-infant/
+fMRI-experiment/data-rest/
+fMRI-experiment/data-rest-alternate/
+fMRI-experiment/infant-stimuli/*
+
+# READMEs that explain file heirarchy #
+##############################
+!fMRI-experiment/infant-stimuli/*/README.md
 
 # files larger than 100MB #
 ###########################

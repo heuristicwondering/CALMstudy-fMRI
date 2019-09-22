@@ -1,0 +1,31 @@
+13.5730 	WARNING 	Monitor specification not found. Creating a temporary one...
+15.2406 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, args=UNKNOWN, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([0., 0., 0.]), colorSpace='rgb', fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fec4bc23a58>, gamma=None, kwargs=UNKNOWN, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fec38146320>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=1, size=array([1280, 1024]), stereo=False, units='norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+15.2406 	EXP 	window1: recordFrameIntervals = False
+15.3393 	EXP 	window1: recordFrameIntervals = True
+15.4468 	WARNING 	t of last frame was 14.08ms (=1/71)
+15.5418 	EXP 	window1: recordFrameIntervals = False
+19.8713 	EXP 	Created Wait4TriggerScreen = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='Wait4TriggerScreen', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='Waiting for Scan Start', units='norm', win=Window(...), wrapWidth=1)
+19.8809 	EXP 	Created TaskInstr1 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='TaskInstr1', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text=str(...), units='norm', win=Window(...), wrapWidth=1)
+19.8864 	EXP 	Created TaskInstr2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='TaskInstr2', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='This will be a different set of instructions.', units='norm', win=Window(...), wrapWidth=1)
+19.8913 	EXP 	Created TaskInstr3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='TaskInstr3', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='Please follow this other instruction.', units='norm', win=Window(...), wrapWidth=1)
+19.8959 	EXP 	Created TaskInstr4 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='TaskInstr4', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='Do you have any questions?', units='norm', win=Window(...), wrapWidth=1)
+19.8989 	EXP 	Created fixation = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.4, italic=False, languageStyle='LTR', name='fixation', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='+', units='norm', win=Window(...), wrapWidth=1)
+19.9087 	EXP 	Created TaskThanks = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='TaskThanks', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text=str(...), units='norm', win=Window(...), wrapWidth=1)
+21.8106 	DATA 	Keypress: space
+22.0821 	DATA 	Keypress: space
+22.3382 	DATA 	Keypress: space
+22.8184 	DATA 	Keypress: space
+23.3464 	DATA 	Keypress: equal
+23.5223 	DATA 	Keypress: equal
+23.6821 	DATA 	Keypress: equal
+23.8424 	DATA 	Keypress: equal
+23.9703 	DATA 	Keypress: equal
+24.1143 	DATA 	Keypress: equal
+24.2742 	DATA 	Keypress: equal
+24.4503 	DATA 	Keypress: equal
+24.6102 	DATA 	Keypress: equal
+24.7861 	DATA 	Keypress: equal
+24.9463 	DATA 	Keypress: equal
+25.1385 	DATA 	Keypress: equal
+28.3702 	DATA 	Keypress: space
+28.3777 	EXP 	window1: mouseVisible = True
