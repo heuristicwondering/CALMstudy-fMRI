@@ -71,4 +71,6 @@ Acknowledgments:
 -----------------------------------------------------------
 Paradigm originally conceived by:
     
-    Add whatever citation Heidemarie wants here.
+    Laurent, H. K., Wright, D., & Finnegan, M. (2018). Mindfulness-related differences 
+    in neural response to own infant negative versus positive emotion contexts. Developmental 
+    Cognitive Neuroscience, 30, 70-76.
