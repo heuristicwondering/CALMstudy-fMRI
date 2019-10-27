@@ -54,7 +54,8 @@ class ExperimentSettings:
         # Loading the list of stimuli to present
         self.stimConditions = data.importConditions(stimFile[0])
 
-        self.vidpath = (self.experimentDir + os.sep + 'infant-stimuli' + os.sep + 'videos')  # Assuming all movies are here
+        self.vidpath = (self.experimentDir + os.sep + 'infant-stimuli'
+                        + os.sep + 'videos' + os.sep + self.expInfo['participant'])  # Assuming all movies are here
         assert os.path.isdir(self.vidpath), self.vidpath + ' which should contain stimuli does not exist'
 
     def setParameters(self):
@@ -63,6 +64,7 @@ class ExperimentSettings:
         dlg = gui.Dlg(title=expName)
         dlg.addField('participant', 'Jayne Doe')
         dlg.addField('Scan Type', choices=['Task', 'Rest', 'Rest-Alternate'])
+        dlg.addField('run', '01')
         dlg.addField('Session', choices=['Pre-Intervention', 'Post-Intervention'])
         dlg.addText(('Note: The Rest-Alternate scan is a resting state scan \n'
                      'using a different set of instructions.'), color='green')
@@ -72,7 +74,7 @@ class ExperimentSettings:
             core.quit()  # user pressed cancel
 
         # Creating a dictionary of information about experiment
-        expKeys = ['participant', 'scantype', 'session']
+        expKeys = ['participant', 'scantype', 'run', 'session']
         self.expInfo = dict(zip(expKeys, expValues))
         self.expInfo['date'] = data.getDateStr()  # add a simple timestamp
         self.expInfo['expName'] = expName
@@ -88,9 +90,9 @@ class ExperimentSettings:
             os.makedirs(dataFolder)
 
         filename = (dataFolder + os.sep
-                    + '%s_%s_%s_%s_%s' % (
-                    self.expInfo['participant'],
-                    self.expInfo['scantype'], self.expInfo['session'],
+                    + '%s_%s_%s_%s_%s_%s' % (
+                    self.expInfo['participant'], self.expInfo['scantype'],
+                    self.expInfo['run'], self.expInfo['session'],
                     self.expInfo['expName'], self.expInfo['date']))
 
         # get video play list

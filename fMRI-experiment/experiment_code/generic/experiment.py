@@ -1,4 +1,4 @@
-from psychopy import visual, core, event
+from psychopy import core, event
 from psychopy.constants import (NOT_STARTED, STARTED, PAUSED, STOPPED, FINISHED)
 
 # Reaction time analysis should be done with duration as this most closely reflects

@@ -12,4 +12,4 @@
 There are 2 basic files for each subpackage.
 
 - **setup.py** - takes care of everything that should be done *before* anything is presented to the participant.
-- **experiment** - takes care of things that need to happen during stimuli presentation.
+- **experiment.py** - takes care of things that need to happen during stimuli presentation.

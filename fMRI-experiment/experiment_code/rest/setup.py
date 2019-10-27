@@ -1,35 +1,37 @@
 from psychopy import visual, gui, logging, core
 from psychopy.constants import NOT_STARTED
 
-
+# Mind wandering
 def defineInstructions(window2use):
     instr1 = visual.TextStim(win=window2use, name='TaskInstr1',  # Primary Task instructions
-                                 text='We will start the first scan now.',
+                                 text='We will start the scan now.',
                                  font='Arial',
                                  pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                                  color='white', colorSpace='rgb', opacity=1,
                                  depth=0.0)
 
     instr2 = visual.TextStim(win=window2use, name='TaskInstr2',
-                                 text='You will see a white cross appear on the screen.',
+                                 text='Keep awake, fixate on the cross, '
+                                      'and let your mind wander during the scan.',
                                  font='Arial',
                                  pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                                  color='white', colorSpace='rgb', opacity=1,
                                  depth=0.0)
 
     instr3 = visual.TextStim(win=window2use, name='TaskInstr3',
-                                 text='Please remain alert and awake while you look and this cross.',
+                                 text='You can think about anything you want but try to maintain mind '
+                                      'wandering throughout the scan.',
                                  font='Arial',
                                  pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                                  color='white', colorSpace='rgb', opacity=1,
                                  depth=0.0)
 
     instr4 = visual.TextStim(win=window2use, name='TaskInstr4',
-                                    text='Do you have any questions?',
-                                    font='Arial',
-                                    pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
-                                    color='white', colorSpace='rgb', opacity=1,
-                                    depth=0.0)
+                                text='Do you have any questions?',
+                                font='Arial',
+                                pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
+                                color='white', colorSpace='rgb', opacity=1,
+                                depth=0.0)
 
     # Setting status attribute
     instructions = [instr1, instr2, instr3, instr4]
@@ -38,24 +40,28 @@ def defineInstructions(window2use):
 
     return instructions
 
-
+# Open awareness
 def defineAlternateInstructions(window2use):
     instr1 = visual.TextStim(win=window2use, name='TaskInstr1',  # Primary Task instructions
-                             text='We will now continue on to the next part of the scan.',
+                             text='We will start the scan now.',
                              font='Arial',
                              pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                              color='white', colorSpace='rgb', opacity=1,
                              depth=0.0)
 
     instr2 = visual.TextStim(win=window2use, name='TaskInstr2',
-                             text='This will be a different set of instructions.',
+                             text='Keep awake, fixate on the cross, '
+                                  'and be aware of your present-moment '
+                                  'experience as best you can.',
                              font='Arial',
                              pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                              color='white', colorSpace='rgb', opacity=1,
                              depth=0.0)
 
     instr3 = visual.TextStim(win=window2use, name='TaskInstr3',
-                             text='Please follow this other instruction.',
+                             text='When you realize that you are thinking about something, '
+                                  'disengage your attention and again try to just notice your '
+                                  'present-moment experience during the scans.',
                              font='Arial',
                              pos=(0, 0), height=0.1, wrapWidth=None, ori=0,
                              color='white', colorSpace='rgb', opacity=1,

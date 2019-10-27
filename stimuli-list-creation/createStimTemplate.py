@@ -17,7 +17,7 @@ import csv
 from random import randint, sample
 
 ###------------- THINGS YOU MIGHT WANT TO CHANGE -------------###
-numRuns = 2  # number of runs to create
+numRuns = 25  # number of runs to create
 numBlocks = 6  # number of blocks in a run
 
 # For creating csv files -- this maps each file name onto a stimuli type
@@ -135,6 +135,7 @@ if len(allBlocks) > 0: # unused blocks. printing to file
     print('\nThey can be found in the file \'leftovers.csv\'\n')
     csvFile = csvDir + 'leftovers.csv'
     refrmtdRunList = reformatRun4File(allBlocks, trialTypes, trialMapping)  # translate indices to a names/type list
+
     # just to make the file a little more readable, put in blank rows between blocks
     indx = list(range(0, len(refrmtdRunList)-1, numTrials))
     for i in reversed(indx):

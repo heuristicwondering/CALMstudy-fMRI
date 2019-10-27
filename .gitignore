@@ -21,6 +21,6 @@ fMRI-experiment/infant-stimuli/videos/*
 
 fMRI-experiment/infant-stimuli/stimuli-lists/*
 !fMRI-experiment/infant-stimuli/stimuli-lists/README.md
-!fMRI-experiment/infant-stimuli/stimuli-lists/pilot.csv
+!fMRI-experiment/infant-stimuli/stimuli-lists/Example-Stim-List.csv
 
-!stimuli-list-creation/stimuli-templates
+stimuli-list-creation/stimuli-templates/*

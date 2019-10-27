@@ -3,8 +3,9 @@
 # Written by Megan Finnegan
 # Contact Megan at heuristicwondering@gmail.com
 #
-# Written for Psychopy 3.0.3 with Python 3.6.3
+# Written for Psychopy 3.0.3 with Python 3.5.5
 
+from psychopy import sound # MF - needed to work around issue #2662 and related #2230
 from psychopy import core
 import os
 
