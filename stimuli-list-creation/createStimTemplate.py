@@ -18,7 +18,7 @@ from random import randint, sample
 
 ###------------- THINGS YOU MIGHT WANT TO CHANGE -------------###
 numRuns = 25  # number of runs to create
-numBlocks = 6  # number of blocks in a run
+numBlocks = 8  # number of blocks in a run
 
 # For creating csv files -- this maps each file name onto a stimuli type
 # it is possible to have multiple files map to the same type. Case sensitive.
@@ -121,7 +121,7 @@ try:
             runList.append(nextBlock)
 
         # write this run to file
-        csvFile = csvDir + 'CALM###_run{0:02d}.csv'.format(run)
+        csvFile = csvDir + 'CALM###_run##_template{0:02d}.csv'.format(run)
         refrmtdRunList = reformatRun4File(runList, trialTypes, trialMapping) # translate indices to a names/type list
         writeRun2File(csvFile, csvHeader, refrmtdRunList)
 
