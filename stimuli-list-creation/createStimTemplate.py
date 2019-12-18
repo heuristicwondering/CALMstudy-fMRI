@@ -23,8 +23,11 @@ numBlocks = 8  # number of blocks in a run
 # For creating csv files -- this maps each file name onto a stimuli type
 # it is possible to have multiple files map to the same type. Case sensitive.
 vidFileNames = ['###_pos.mp4', '###_neg.mp4',
-                'other_pos.mp4', 'other_neg.mp4', 'scrambled-###_pos.mp4', 'scrambled-###_neg.mp4']
-trialTypes = ['InfOwnPos', 'InfOwnNeg', 'InfOtherPos', 'InfOtherNeg', 'Control', 'Control']
+                'other_pos.mp4', 'other_neg.mp4',
+                'scrambled-###_pos.mp4', 'scrambled-###_neg.mp4',
+                'scrambled-other_pos.mp4', 'scrambled-other_neg.mp4']
+trialTypes = ['InfOwnPos', 'InfOwnNeg', 'InfOtherPos', 'InfOtherNeg',
+              'Control', 'Control', 'Control', 'Control']
 ###--------------------------- END ---------------------------###
 
 
